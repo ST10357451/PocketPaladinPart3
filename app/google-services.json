@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862084473034",
+    "project_id": "pocketpaladinfinalapp",
+    "storage_bucket": "pocketpaladinfinalapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862084473034:android:b855d5c67f809c0c119433",
+        "android_client_info": {
+          "package_name": "com.example.pocketpaladinfinalapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs1-1VjYGCzWOBWc5qGh_ihYq4T0infkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
