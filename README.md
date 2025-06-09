@@ -17,13 +17,7 @@ Below is a list of available features:
 - A Create Expense Page
 - For Expenses, the user can upload a picture of their receipt
 - Setting min and max monthly goals
-- The app data is stored in a local database
-
-Below is a list of features that still need to be implemented:
-- Forgot Password page
-- Graphs and charts to display budget information
-- Gamification features
-- An online database
+- The app data is stored in an online Databse (Firestore)
 
 ## Team:
 
