@@ -3,6 +3,7 @@ package com.example.pocketpaladinfinalapp
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +12,7 @@ import java.util.*
 
 class AddCategoryActivity : AppCompatActivity() {
 
+    private lateinit var backIcon: ImageView
     private lateinit var editTextCategoryName: EditText
     private lateinit var saveCategoryButton: Button
     private lateinit var firestoreRepo: FirestoreRepo
@@ -21,12 +23,17 @@ class AddCategoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_category)
 
         // Initialize views
+        backIcon = findViewById(R.id.backIcon)
         editTextCategoryName = findViewById(R.id.categoryNameEditText)
         saveCategoryButton = findViewById(R.id.saveCategoryButton)
 
         // Initialize Firebase Auth and Repo
         auth = FirebaseAuth.getInstance()
         firestoreRepo = FirestoreRepo()
+
+        backIcon.setOnClickListener {
+            finish()
+        }
 
         saveCategoryButton.setOnClickListener {
             saveCategory()
