@@ -46,7 +46,7 @@ class Login : AppCompatActivity() {
                                 val username = document.getString("username") ?: "User"
                                 Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_SHORT).show()
 
-                                val intent = Intent(this, MainActivity::class.java)
+                                val intent = Intent(this, CategoryActivity::class.java)
                                 intent.putExtra("username", username)
                                 startActivity(intent)
                                 finish()

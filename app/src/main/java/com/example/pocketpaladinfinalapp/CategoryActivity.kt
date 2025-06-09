@@ -18,6 +18,11 @@ import java.util.Calendar
 
 class CategoryActivity : AppCompatActivity() {
 
+    private lateinit var navHome: ImageButton
+    private lateinit var navExpenses: ImageButton
+    private lateinit var navBudgetGoals: ImageButton
+    private lateinit var navSettings: ImageButton
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var pieChart: PieChart
     private lateinit var db: FirebaseFirestore
@@ -31,6 +36,12 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_category)
 
         db = FirebaseFirestore.getInstance()
+
+        navHome = findViewById(R.id.navHome)
+        navExpenses = findViewById(R.id.navExpenses)
+        navBudgetGoals = findViewById(R.id.navBudgetGoals)
+        navSettings = findViewById(R.id.navSettings)
+
         recyclerView = findViewById(R.id.categoryRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter(categoryList)
@@ -50,31 +61,33 @@ class CategoryActivity : AppCompatActivity() {
 
         }
     }
-//    private fun showMonthPickerDialog() {
-//        val year = calendar.get(Calendar.YEAR)
-//        val month = calendar.get(Calendar.MONTH)
-//
-//        val dialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
-//            filterByMonth(selectedYear, selectedMonth)
-//        }, year, month, 1)
-//
-//        dialog.datePicker.findViewById<View>(
-//            resources.getIdentifier("day", "id", "android")
-//        )?.visibility = View.GONE // Hide the day picker
-//        dialog.show()
-//    }
-//    private fun filterByMonth(year: Int, month: Int) {
-//        val filtered = allCategories.filter { category ->
-//            val categoryCalendar = Calendar.getInstance().apply {
-//                timeInMillis = category.timestamp
-//            }
-//            categoryCalendar.get(Calendar.YEAR) == year &&
-//                    categoryCalendar.get(Calendar.MONTH) == month
-//        }
-//
-//        adapter = CategoryAdapter(filtered)
-//        categoryRecyclerView.adapter = adapter
-//    }
+
+    //*private fun showMonthPickerDialog() {
+    //        val year = calendar.get(Calendar.YEAR)
+    //        val month = calendar.get(Calendar.MONTH)
+    //
+    //        val dialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
+    //            filterByMonth(selectedYear, selectedMonth)
+    //        }, year, month, 1)
+    //
+    //        dialog.datePicker.findViewById<View>(
+    //            resources.getIdentifier("day", "id", "android")
+    //        )?.visibility = View.GONE // Hide the day picker
+    //        dialog.show()
+    //    }
+    //    private fun filterByMonth(year: Int, month: Int) {
+    //        val filtered = allCategories.filter { category ->
+    //            val categoryCalendar = Calendar.getInstance().apply {
+    //                timeInMillis = category.timestamp
+    //            }
+    //            categoryCalendar.get(Calendar.YEAR) == year &&
+    //                    categoryCalendar.get(Calendar.MONTH) == month
+    //        }
+    //w
+    //        adapter = CategoryAdapter(filtered)
+    //        categoryRecyclerView.adapter = adapter
+    //    }*//
+
 
 
     override fun onResume() {
@@ -121,26 +134,27 @@ class CategoryActivity : AppCompatActivity() {
         pieChart.animateY(1000)
         pieChart.invalidate()
     }
-   // private fun setupNavigation() {
-   //     navHome.setOnClickListener {
+
+    private fun setupNavigation() {
+        navHome.setOnClickListener {
             // Navigate to View expense
-     //       val intent = Intent(this, ViewExpenseActivity::class.java) // chage this to settigs activity
-     //       startActivity(intent)
-     //   }
-     //   navExpenses.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            startActivity(intent)
+        }
+        navExpenses.setOnClickListener {
             // Navigate to add Expenses
-      //      val intent = Intent(this, AddExpenseActivity::class.java) // chage this to settigs activity
-       //     startActivity(intent)
-       // }
-      //  navBudgetGoals.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            startActivity(intent)
+        }
+        navBudgetGoals.setOnClickListener {
             // Navigate to Budget Goals
-       //     val intent = Intent(this, BudgetGoalActivity::class.java) // chage this to settigs activity
-       //     startActivity(intent)
-       // }
-       // navSettings.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            startActivity(intent)
+        }
+        navSettings.setOnClickListener {
             // Navigate to settings screen
-        //    val intent = Intent(this, SettingsPageActivity::class.java) // chage this to settigs activity
-        //    startActivity(intent)
-       // }
-    //}
+            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            startActivity(intent)
+        }
+    }
 }
