@@ -1,0 +1,146 @@
+package com.example.pocketpaladinfinalapp
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.DatePickerDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
+
+class CategoryActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var pieChart: PieChart
+    private lateinit var db: FirebaseFirestore
+    private lateinit var categoryAdapter: CategoryAdapter
+    private val categoryList = mutableListOf<Category>()
+
+    private val calendar = Calendar.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_category)
+
+        db = FirebaseFirestore.getInstance()
+        recyclerView = findViewById(R.id.categoryRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        categoryAdapter = CategoryAdapter(categoryList)
+        recyclerView.adapter = categoryAdapter
+
+        pieChart = PieChart(this)
+        loadCategories()
+
+        // Add button opens AddCategoryActivity
+        findViewById<ImageButton>(R.id.addButton).setOnClickListener {
+            startActivity(Intent(this, AddCategoryActivity::class.java))
+        }
+
+        // Filter button (you can later add filtering logic)
+        findViewById<ImageButton>(R.id.filterButton).setOnClickListener {
+            //showMonthPickerDialog()
+
+        }
+    }
+//    private fun showMonthPickerDialog() {
+//        val year = calendar.get(Calendar.YEAR)
+//        val month = calendar.get(Calendar.MONTH)
+//
+//        val dialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
+//            filterByMonth(selectedYear, selectedMonth)
+//        }, year, month, 1)
+//
+//        dialog.datePicker.findViewById<View>(
+//            resources.getIdentifier("day", "id", "android")
+//        )?.visibility = View.GONE // Hide the day picker
+//        dialog.show()
+//    }
+//    private fun filterByMonth(year: Int, month: Int) {
+//        val filtered = allCategories.filter { category ->
+//            val categoryCalendar = Calendar.getInstance().apply {
+//                timeInMillis = category.timestamp
+//            }
+//            categoryCalendar.get(Calendar.YEAR) == year &&
+//                    categoryCalendar.get(Calendar.MONTH) == month
+//        }
+//
+//        adapter = CategoryAdapter(filtered)
+//        categoryRecyclerView.adapter = adapter
+//    }
+
+
+    override fun onResume() {
+        super.onResume()
+        loadCategories()
+    }
+
+    private fun loadCategories() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        db.collection("categories")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { result ->
+                categoryList.clear()
+                val entries = mutableListOf<PieEntry>()
+
+                for (document in result) {
+                    val category = document.toObject(Category::class.java)
+                    categoryList.add(category)
+
+                    if (category.categoryTotal > 0) {
+                        entries.add(PieEntry(category.categoryTotal.toFloat(), category.categoryName))
+                    }
+                }
+
+                categoryAdapter.notifyDataSetChanged()
+                updatePieChart(entries)
+            }
+    }
+
+    private fun updatePieChart(entries: List<PieEntry>) {
+        val dataSet = PieDataSet(entries, "Spending")
+        dataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
+        dataSet.sliceSpace = 3f
+        dataSet.selectionShift = 5f
+
+        val data = PieData(dataSet)
+        data.setValueTextSize(12f)
+        data.setValueTextColor(android.graphics.Color.BLACK)
+
+        pieChart.data = data
+        pieChart.description.isEnabled = false
+        pieChart.animateY(1000)
+        pieChart.invalidate()
+    }
+   // private fun setupNavigation() {
+   //     navHome.setOnClickListener {
+            // Navigate to View expense
+     //       val intent = Intent(this, ViewExpenseActivity::class.java) // chage this to settigs activity
+     //       startActivity(intent)
+     //   }
+     //   navExpenses.setOnClickListener {
+            // Navigate to add Expenses
+      //      val intent = Intent(this, AddExpenseActivity::class.java) // chage this to settigs activity
+       //     startActivity(intent)
+       // }
+      //  navBudgetGoals.setOnClickListener {
+            // Navigate to Budget Goals
+       //     val intent = Intent(this, BudgetGoalActivity::class.java) // chage this to settigs activity
+       //     startActivity(intent)
+       // }
+       // navSettings.setOnClickListener {
+            // Navigate to settings screen
+        //    val intent = Intent(this, SettingsPageActivity::class.java) // chage this to settigs activity
+        //    startActivity(intent)
+       // }
+    //}
+}

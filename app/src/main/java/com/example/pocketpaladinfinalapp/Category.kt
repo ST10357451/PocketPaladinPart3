@@ -2,6 +2,8 @@ package com.example.pocketpaladinfinalapp
 
 data class Category(
     val categoryId: String = "",
-    val name: String = "",
-    val total: Double = 0.0
+    val userId: String = "",
+    val categoryName: String = "",
+    val categoryTotal: Double = 0.0,
+    val month: String = ""
 )
