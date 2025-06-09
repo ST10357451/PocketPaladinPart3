@@ -18,7 +18,7 @@ class AddCategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_category) // Ensure this matches your layout file
+        setContentView(R.layout.activity_add_category)
 
         // Initialize views
         editTextCategoryName = findViewById(R.id.categoryNameEditText)

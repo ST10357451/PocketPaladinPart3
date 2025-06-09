@@ -3,6 +3,7 @@ package com.example.pocketpaladinfinalapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.DatePickerDialog
 import androidx.recyclerview.widget.LinearLayoutManager
