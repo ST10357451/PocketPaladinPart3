@@ -45,10 +45,13 @@ class CategoryActivity : AppCompatActivity() {
 
         firestoreRepo = FirestoreRepo()
 
+
         navHome = findViewById(R.id.navHome)
         navExpenses = findViewById(R.id.navExpenses)
         navBudgetGoals = findViewById(R.id.navBudgetGoals)
         navSettings = findViewById(R.id.navSettings)
+
+        setupNavigation()
 
         recyclerView = findViewById(R.id.categoryRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
