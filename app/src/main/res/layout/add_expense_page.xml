@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddExpenseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/back_arrow"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:id="@+id/AddExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Add Expense"
+            android:textColor="#333333"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:text="Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Enter description"
+            android:inputType="text"
+            android:padding="6dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_border" />
+
+        <TextView
+            android:text="Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:text="Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <EditText
+            android:id="@+id/etDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:focusable="false"
+            android:hint="Select Date"
+            android:padding="6dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_border" />
+
+        <TextView
+            android:text="Start Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <EditText
+            android:id="@+id/etStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:focusable="false"
+            android:hint="Start Time"
+            android:padding="6dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_border" />
+
+        <TextView
+            android:text="End Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <EditText
+            android:id="@+id/etEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:focusable="false"
+            android:hint="End Time"
+            android:padding="6dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_border" />
+
+        <TextView
+            android:text="Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <EditText
+            android:id="@+id/etAmount"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Enter amount"
+            android:inputType="numberDecimal"
+            android:padding="6dp"
+            android:textSize="14sp"
+            android:background="@drawable/edit_text_border" />
+
+        <TextView
+            android:text="Photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#555555" />
+
+        <ImageButton
+            android:id="@+id/btnSelectPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/edit_text_border"
+            android:contentDescription="Upload Image"
+            android:padding="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/upload_image_icon" />
+
+        <Button
+            android:id="@+id/btnSaveExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Save Expense"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.budgetapp.com.example.pocketpaladinapp.SettingsActivity
 
 
 class ExpensesActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class ExpensesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_expenses)
+        setContentView(R.layout.add_expense_progress_bar)
 
         // Top bar buttons
         buttonBack = findViewById(R.id.buttonBack)
@@ -47,6 +48,8 @@ class ExpensesActivity : AppCompatActivity() {
 
         setupListeners()
     }
+
+
 
     private fun setupListeners() {
         buttonBack.setOnClickListener {
@@ -73,14 +76,9 @@ class ExpensesActivity : AppCompatActivity() {
             startActivity(Intent(this, CategoryActivity::class.java))
         }
 
-        // Expenses → Expenses Progress Bar
-        navExpenses.setOnClickListener {
-            startActivity(Intent(this, ExpensesProgressBar::class.java))
-        }
-
         // Points → Activity Points Screen
         navPoints.setOnClickListener {
-            startActivity(Intent(this, ActivityPointsScreen::class.java))
+            startActivity(Intent(this, PointsScreen::class.java))
         }
 
         // Settings → Settings Screen
