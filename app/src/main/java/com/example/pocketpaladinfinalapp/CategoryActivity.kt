@@ -16,6 +16,8 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
+import android.widget.Toast
+
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -29,6 +31,9 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryList = mutableListOf<Category>()
+    private lateinit var firestoreRepo: FirestoreRepo
+
+
 
     private val calendar = Calendar.getInstance()
 
@@ -37,6 +42,8 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_category)
 
         db = FirebaseFirestore.getInstance()
+
+        firestoreRepo = FirestoreRepo()
 
         navHome = findViewById(R.id.navHome)
         navExpenses = findViewById(R.id.navExpenses)
@@ -58,36 +65,39 @@ class CategoryActivity : AppCompatActivity() {
 
         // Filter button (you can later add filtering logic)
         findViewById<ImageButton>(R.id.filterButton).setOnClickListener {
-            //showMonthPickerDialog()
+           // showMonthPickerDialog()
 
         }
     }
-
-    //*private fun showMonthPickerDialog() {
-    //        val year = calendar.get(Calendar.YEAR)
-    //        val month = calendar.get(Calendar.MONTH)
-    //
-    //        val dialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
-    //            filterByMonth(selectedYear, selectedMonth)
-    //        }, year, month, 1)
-    //
-    //        dialog.datePicker.findViewById<View>(
-    //            resources.getIdentifier("day", "id", "android")
-    //        )?.visibility = View.GONE // Hide the day picker
-    //        dialog.show()
-    //    }
-    //    private fun filterByMonth(year: Int, month: Int) {
-    //        val filtered = allCategories.filter { category ->
-    //            val categoryCalendar = Calendar.getInstance().apply {
-    //                timeInMillis = category.timestamp
-    //            }
-    //            categoryCalendar.get(Calendar.YEAR) == year &&
-    //                    categoryCalendar.get(Calendar.MONTH) == month
-    //        }
-    //w
-    //        adapter = CategoryAdapter(filtered)
-    //        categoryRecyclerView.adapter = adapter
-    //    }*//
+//    //error starts here
+//    private fun showMonthPickerDialog() {
+//        val year = calendar.get(Calendar.YEAR)
+//        val month = calendar.get(Calendar.MONTH)
+//
+//        val dialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
+//            filterByMonth(selectedYear, selectedMonth)
+//        }, year, month, 1)
+//
+//        // Hide the day picker
+//        dialog.datePicker.findViewById<View>(
+//            resources.getIdentifier("day", "id", "android")
+//        )?.visibility = View.GONE
+//
+//        dialog.show()
+//    }
+//
+//    private fun filterByMonth(year: Int, month: Int) {
+//        val filtered = allCategories.filter { category ->
+//            val categoryCalendar = Calendar.getInstance().apply {
+//                timeInMillis = category.timestamp // Make sure `timestamp` is a Long
+//            }
+//            categoryCalendar.get(Calendar.YEAR) == year &&
+//                    categoryCalendar.get(Calendar.MONTH) == month
+//        }
+//
+//        recyclerView.adapter = CategoryAdapter(filtered)
+//    }
+//    //error ends here
 
 
 
@@ -96,29 +106,21 @@ class CategoryActivity : AppCompatActivity() {
         loadCategories()
     }
 
+
     private fun loadCategories() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        db.collection("categories")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
-                categoryList.clear()
-                val entries = mutableListOf<PieEntry>()
-
-                for (document in result) {
-                    val category = document.toObject(Category::class.java)
-                    categoryList.add(category)
-
-                    if (category.categoryTotal > 0) {
-                        entries.add(PieEntry(category.categoryTotal.toFloat(), category.categoryName))
-                    }
-                }
-
-                categoryAdapter.notifyDataSetChanged()
-                updatePieChart(entries)
+        firestoreRepo.getAllCategories(userId)
+            .get() // <-- this is important!
+            .addOnSuccessListener { documents ->
+                val categoryList = documents.mapNotNull { it.toObject(Category::class.java) }
+                recyclerView.adapter = CategoryAdapter(categoryList)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to load categories", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun updatePieChart(entries: List<PieEntry>) {
         val dataSet = PieDataSet(entries, "Spending")
