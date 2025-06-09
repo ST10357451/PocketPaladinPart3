@@ -56,9 +56,10 @@ class CategoryActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter(categoryList)
         recyclerView.adapter = categoryAdapter
-
+      
         pieChart = findViewById(R.id.categoryChart)
         loadCategories()
+
 
         // Add button opens AddCategoryActivity
         findViewById<ImageButton>(R.id.addButton).setOnClickListener {
@@ -158,7 +159,7 @@ class CategoryActivity : AppCompatActivity() {
         }
         navSettings.setOnClickListener {
             // Navigate to settings screen
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, SettingActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
     }

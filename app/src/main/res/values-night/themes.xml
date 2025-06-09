@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.PocketPaladinFinalApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Use custom colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
     </style>
+
+    <style name="Theme.PocketPaladinFinalApp" parent="Base.Theme.PocketPaladinFinalApp"/>
 </resources>
