@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 
 
-class settingActivity : AppCompatActivity()  {
+class SettingActivity : AppCompatActivity()  {
     private lateinit var emailField: EditText
     private lateinit var themeSwitch: Switch
     private lateinit var logoutButton: Button

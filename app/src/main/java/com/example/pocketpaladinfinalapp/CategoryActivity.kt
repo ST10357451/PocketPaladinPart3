@@ -50,13 +50,19 @@ class CategoryActivity : AppCompatActivity() {
         navBudgetGoals = findViewById(R.id.navBudgetGoals)
         navSettings = findViewById(R.id.navSettings)
 
+        setupNavigation()
+
         recyclerView = findViewById(R.id.categoryRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter(categoryList)
         recyclerView.adapter = categoryAdapter
 
+
+
+
         pieChart = PieChart(this)
         loadCategories()
+
 
         // Add button opens AddCategoryActivity
         findViewById<ImageButton>(R.id.addButton).setOnClickListener {
@@ -141,12 +147,12 @@ class CategoryActivity : AppCompatActivity() {
     private fun setupNavigation() {
         navHome.setOnClickListener {
             // Navigate to View expense
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, CategoryActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
         navExpenses.setOnClickListener {
             // Navigate to add Expenses
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, Expense::class.java) // chage this to settigs activity
             startActivity(intent)
         }
         navBudgetGoals.setOnClickListener {
@@ -156,7 +162,7 @@ class CategoryActivity : AppCompatActivity() {
         }
         navSettings.setOnClickListener {
             // Navigate to settings screen
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, SettingActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
     }
