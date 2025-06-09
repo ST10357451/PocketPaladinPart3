@@ -12,7 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PocketPaladinFinalApp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ViewExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="false" />
         <activity
             android:name=".CategoryActivity"
             android:exported="false" />

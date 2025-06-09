@@ -141,12 +141,13 @@ class CategoryActivity : AppCompatActivity() {
     private fun setupNavigation() {
         navHome.setOnClickListener {
             // Navigate to View expense
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, ViewExpenseActivity::class.java) // chage this to settigs activity
             startActivity(intent)
+            finish()
         }
         navExpenses.setOnClickListener {
             // Navigate to add Expenses
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, AddExpenseActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
         navBudgetGoals.setOnClickListener {
