@@ -46,6 +46,3 @@ Paruk, Y., 2025. RoomDB, PROG7313 Programming 3A. [online via Microsoft Teams] T
 OpenAI. 2025.[online].Available at: < https://chatgpt.com/ >[Accessed on 30 April 2025]
 (Used for implementing a nav bar into our code as well as error handling)
 OpenAI. 2025.[online].Available at: < https://chatgpt.com/ >[Accessed on 2 May 2025]
-# Pocket Paladin - Personal Budgeting App
-
-
