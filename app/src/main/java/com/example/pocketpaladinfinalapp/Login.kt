@@ -7,19 +7,20 @@ import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Login : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         val emailField = findViewById<EditText>(R.id.emailEditText)
         val passwordField = findViewById<EditText>(R.id.passwordEditText)
@@ -31,30 +32,46 @@ class Login : AppCompatActivity() {
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+            if (email.isBlank() || password.isBlank()) {
+                Toast.makeText(this, "Please enter credentials!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    val uid = auth.currentUser!!.uid
+                    db.collection("users").document(uid).get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                val username = document.getString("username") ?: "User"
+                                Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_SHORT).show()
+
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra("username", username)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this, "User data not found.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to fetch user info.", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Authentication failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
         }
 
         forgotPassLink.setOnClickListener {
-            Toast.makeText(this, "Sorry, this is not available at the moment", Toast.LENGTH_LONG)
-                .apply { setGravity(Gravity.CENTER, 0, 0) }
-                .show()
+            val toast = Toast.makeText(this, "Sorry, this is not available at the moment", Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
         }
 
         registerLink.setOnClickListener {
-            startActivity(Intent(this, Register::class.java))
+            val intent = Intent(this, Register::class.java)
+            startActivity(intent)
         }
     }
 }
