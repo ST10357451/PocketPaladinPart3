@@ -34,7 +34,7 @@ class ViewExpenseActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         repo.getAllExpenses(userId).addOnSuccessListener { result ->
-            Log.d("EXPENSE_DEBUG", "Documents fetched: ${result.size}")
+            Log.d("EXPENSE_DEBUG", "Documents fetched: ${result.size()}")
             expenses.clear()
             for (doc in result) {
                 Log.d("EXPENSE_DEBUG", "Raw doc: ${doc.data}")
