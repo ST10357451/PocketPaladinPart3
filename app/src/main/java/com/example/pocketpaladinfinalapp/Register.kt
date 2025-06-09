@@ -1,20 +1,12 @@
 package com.example.pocketpaladinfinalapp
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class Register : AppCompatActivity() {
 
@@ -25,7 +17,6 @@ class Register : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_register)
 
-        // Initialize Firebase Auth
         auth = Firebase.auth
 
         val usernameField = findViewById<EditText>(R.id.usernameEditText)
@@ -35,30 +26,29 @@ class Register : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.registerButton)
 
         registerButton.setOnClickListener {
-            val username = usernameField.text.toString()
-            val email = emailField.text.toString()
+            val username = usernameField.text.toString().trim()
+            val email = emailField.text.toString().trim()
             val password = passwordField.text.toString()
             val confirmPassword = confirmPasswordField.text.toString()
 
-            if (username.isBlank() || email.isBlank() || password.isBlank()) {
-                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
-            }
-            else if (password != confirmPassword) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // If register succeeds, display a message to the user.
-                            Toast.makeText(this,"User Registered.",Toast.LENGTH_SHORT,).show()
-                            finish() // Go back to login
+            when {
+                username.isEmpty() || email.isEmpty() || password.isEmpty() -> {
+                    Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
+                }
+                password != confirmPassword -> {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                                finish() // Return to Login
+                            } else {
+                                Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            }
                         }
-                        else{
-                            // If register fails, display a message to the user.
-                            Toast.makeText(this,"Authentication failed.",Toast.LENGTH_SHORT,).show()
-                        }
-                    }
+                }
             }
         }
     }
