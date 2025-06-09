@@ -56,11 +56,8 @@ class CategoryActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter(categoryList)
         recyclerView.adapter = categoryAdapter
-
-
-
-
-        pieChart = PieChart(this)
+      
+        pieChart = findViewById(R.id.categoryChart)
         loadCategories()
 
 
@@ -71,7 +68,7 @@ class CategoryActivity : AppCompatActivity() {
 
         // Filter button (you can later add filtering logic)
         findViewById<ImageButton>(R.id.filterButton).setOnClickListener {
-           // showMonthPickerDialog()
+            // showMonthPickerDialog()
 
         }
     }
@@ -152,12 +149,12 @@ class CategoryActivity : AppCompatActivity() {
         }
         navExpenses.setOnClickListener {
             // Navigate to add Expenses
-            val intent = Intent(this, Expense::class.java) // chage this to settigs activity
+            val intent = Intent(this, AddExpenseActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
         navBudgetGoals.setOnClickListener {
             // Navigate to Budget Goals
-            val intent = Intent(this, MainActivity::class.java) // chage this to settigs activity
+            val intent = Intent(this, ViewExpenseActivity::class.java) // chage this to settigs activity
             startActivity(intent)
         }
         navSettings.setOnClickListener {

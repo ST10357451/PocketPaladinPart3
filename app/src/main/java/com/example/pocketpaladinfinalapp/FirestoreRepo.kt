@@ -1,11 +1,15 @@
 package com.example.pocketpaladinfinalapp
 
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 
 class FirestoreRepo(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -59,17 +63,21 @@ class FirestoreRepo(
 
     // ========== EXPENSES ==========
 
-    fun addExpense(userId: String, expense: Expense): Task<Void> {
-        val expenseId = db.collection("dummy").document().id // Generate ID
-        val updatedExpense = expense.copy(expenseId = expenseId)
-        return userRef(userId)
+    fun addExpense(userId: String, categoryId: String, expense: Expense): Task<DocumentReference> {
+        val expenseRef = db.collection("users")
+            .document(userId)
+            .collection("categories")
+            .document(categoryId)
             .collection("expenses")
-            .document(expenseId)
-            .set(updatedExpense)
+        return expenseRef.add(expense)
     }
 
-    fun getAllExpenses(userId: String): CollectionReference {
-        return userRef(userId).collection("expenses")
+
+    fun getAllExpenses(userId: String): Task<QuerySnapshot> {
+        return FirebaseFirestore.getInstance()
+            .collection("expenses")
+            .whereEqualTo("userOwnerId", userId)
+            .get()
     }
 
     fun getExpensesForMonth(userId: String, month: String): Query {
