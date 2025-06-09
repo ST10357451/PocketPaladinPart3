@@ -20,6 +20,9 @@
             android:name=".AddCategoryActivity"
             android:exported="false" />
         <activity
+            android:name=".SettingActivity"
+            android:exported="false"/>
+        <activity
             android:name=".Register"
             android:exported="false" />
         <activity
