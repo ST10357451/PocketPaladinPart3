@@ -1,6 +1,6 @@
 # Pocket Paladin Part 3 - Personal Budgeting App
 
-##Our Demo Video:
+## Our Demo Video:
 Youtube Link: https://youtu.be/tEdaIhCSiVg
 
 ## App Description:
